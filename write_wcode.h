@@ -1,12 +1,12 @@
 #include "common.h"
 
 __device__ static void write_wcode(// output
-								   uint *d_output,
-								   // input
-								   ull wcode_pos,
-								   uint *s_warpcode,
-								   uint wcode_len,
-								   int warp_lane) {
+                                   uint *d_output,
+                                   // input
+                                   ull wcode_pos,
+                                   uint *s_warpcode,
+                                   uint wcode_len,
+                                   int warp_lane) {
 	if (wcode_len > 0) {
 		// Calculate a pointer to the sub-vector of d_output in which
 		// the warp-code will be written
