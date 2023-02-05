@@ -1,11 +1,11 @@
 #include "sum_field_macros.h"
 
 __device__ static void get_sum_of_prev_values_within_segment(// output
-															 ull &sum_of_prev_values_within_segment,
-															 // input
-															 uint segment_idx,
-															 int segment_lane,
-															 volatile ull *d_scan) {
+                                                             ull &sum_of_prev_values_within_segment,
+                                                             // input
+                                                             uint segment_idx,
+                                                             int segment_lane,
+                                                             volatile ull *d_scan) {
 	sum_of_prev_values_within_segment = 0;
 
 	if (segment_lane > 0) {
