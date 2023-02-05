@@ -1,17 +1,17 @@
 #include "common.h"
 
 __device__ static void build_wcode(// output
-								   uint *s_warpcode,
-								   // input	
-								   uint seg_val[16],
-								   uint seg_len[16],
-								   uint thcode_len,
-								   uint pos_of_thcode_in_warpcode,
-								   ull wcode_pos,
-								   uint idx_of_first_symbol_of_thinput,
-								   uint num_symbols,
-								   int warp_lane,
-								   bool is_last_thinput) {
+                                   uint *s_warpcode,
+                                   // input	
+                                   uint seg_val[16],
+                                   uint seg_len[16],
+                                   uint thcode_len,
+                                   uint pos_of_thcode_in_warpcode,
+                                   ull wcode_pos,
+                                   uint idx_of_first_symbol_of_thinput,
+                                   uint num_symbols,
+                                   int warp_lane,
+                                   bool is_last_thinput) {
 	// Compute s_thcode, which is a pointer to the sub-vector of s_warpcode
 	// in which the thread-code will be written
 	uint buff_wcode_pos = wcode_pos % 32;
