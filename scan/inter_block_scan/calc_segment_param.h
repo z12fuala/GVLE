@@ -1,12 +1,12 @@
 #include "../../common.h"
 
 __device__ void static calc_segment_param(// output
-										  int &segment_idx,
-										  int &segment_lane,
-										  int &segment_last_lane,
-										  // input
-										  uint value_idx,
-										  uint num_values) {
+                                          int &segment_idx,
+                                          int &segment_lane,
+                                          int &segment_last_lane,
+                                          // input
+                                          uint value_idx,
+                                          uint num_values) {
 	segment_idx = value_idx / WARP_SIZE;
 
 	segment_lane = value_idx % WARP_SIZE;
