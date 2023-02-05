@@ -8,14 +8,14 @@
 
 template <uint TBLOCK_SIZE = 128>
 __global__ static void GVLE_kernel(// output
-								   uint *d_output,
-								   // input
-								   uint *d_input,
-								   uint num_symbols,
-								   ushort d_VLET_val[256],
-								   uchar d_VLET_len[256],
-								   ull *d_scan,
-								   uint d_global_counter[1]) {
+				   uint *d_output,
+				   // input
+				   uint *d_input,
+				   uint num_symbols,
+				   ushort d_VLET_val[256],
+				   uchar d_VLET_len[256],
+				   ull *d_scan,
+				   uint d_global_counter[1]) {
 	// Initializations
 	const uint num_blockinputs = CEIL_DIV(num_symbols, TBLOCK_SIZE * 32);
 	const uint last_thinput_idx = CEIL_DIV(num_symbols, 32) - 1;
@@ -45,40 +45,40 @@ __global__ static void GVLE_kernel(// output
 		uint seg_len[16];
 		uint thcode_len;
 		calc_thcode(// output
-					seg_val, seg_len, thcode_len,
-					// input
-					thinput, s_VLET_val, s_VLET_len,
-					idx_of_first_symbol_of_thinput,
-					num_symbols);
+			    seg_val, seg_len, thcode_len,
+			    // input
+			    thinput, s_VLET_val, s_VLET_len,
+			    idx_of_first_symbol_of_thinput,
+			    num_symbols);
 
 		// Calculate parameters of warp-code
 		uint pos_of_thcode_in_wcode, wcode_len, wcode_pos;
 		calc_wcode_param<TBLOCK_SIZE>(// output
-									  pos_of_thcode_in_wcode, 
-			                          wcode_len, wcode_pos,
-									  // input
-									  thcode_len, d_scan,
-									  blockinput_idx, num_blockinputs,
-									  warp_idx, warp_lane);
+					      pos_of_thcode_in_wcode, 
+			                      wcode_len, wcode_pos,
+					      // input
+					      thcode_len, d_scan,
+					      blockinput_idx, num_blockinputs,
+					      warp_idx, warp_lane);
 
 		// Build warp-code in shared memory		
 		__shared__ uint s_warpcodes[NUM_WARPS(TBLOCK_SIZE)]
-			                       [WARP_SIZE * 16 + 1];
+			                   [WARP_SIZE * 16 + 1];
 		build_wcode(// output
-					s_warpcodes[warp_idx],
-					// input
-					seg_val, seg_len, thcode_len,
-					pos_of_thcode_in_wcode, wcode_pos,
-					idx_of_first_symbol_of_thinput,
-					num_symbols,
-					warp_lane, is_last_thinput);
+			    s_warpcodes[warp_idx],
+			    // input
+			    seg_val, seg_len, thcode_len,
+			    pos_of_thcode_in_wcode, wcode_pos,
+			    idx_of_first_symbol_of_thinput,
+			    num_symbols,
+			    warp_lane, is_last_thinput);
 
 		// Write warp-code to output vector
 		write_wcode(// output
-			        d_output,
-					// input
-			        wcode_pos, s_warpcodes[warp_idx],
-					wcode_len, warp_lane);
+			    d_output,
+			    // input
+			    wcode_pos, s_warpcodes[warp_idx],
+			    wcode_len, warp_lane);
 
 		// Get index of next block-input to encode
 		blockinput_idx = get_global_counter_value(d_global_counter);
