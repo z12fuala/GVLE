@@ -8,14 +8,14 @@
 
 template <uint TBLOCK_SIZE = 128>
 __global__ static void GVLE_kernel(// output
-				   uint *d_output,
-				   // input
-				   uint *d_input,
-				   uint num_symbols,
-				   ushort d_VLET_val[256],
-				   uchar d_VLET_len[256],
-				   ull *d_scan,
-				   uint d_global_counter[1]) {
+                                   uint *d_output,
+                                   // input
+                                   uint *d_input,
+                                   uint num_symbols,
+                                   ushort d_VLET_val[256],
+                                   uchar d_VLET_len[256],
+                                   ull *d_scan,
+                                   uint d_global_counter[1]) {
 	// Initializations
 	const uint num_blockinputs = CEIL_DIV(num_symbols, TBLOCK_SIZE * 32);
 	const uint last_thinput_idx = CEIL_DIV(num_symbols, 32) - 1;
