@@ -1,15 +1,15 @@
 #include "common.h"
 
 __device__ static void calc_thcode(// output
-  								   uint codeword_val[16],
-								   uint codeword_len[16],
-								   uint &thcode_len,
-								   // input
-								   uchar32 thinput,
-								   ushort s_VLET_val[256],
-								   uchar s_VLET_len[256],
-								   uint idx_of_first_symbol_of_thinput,
-								   uint num_symbols) {
+                                   uint codeword_val[16],
+                                   uint codeword_len[16],
+                                   uint &thcode_len,
+                                   // input
+                                   uchar32 thinput,
+                                   ushort s_VLET_val[256],
+                                   uchar s_VLET_len[256],
+                                   uint idx_of_first_symbol_of_thinput,
+                                   uint num_symbols) {
 	uint cw_len[32];
 	uint cw_val[32];
 
