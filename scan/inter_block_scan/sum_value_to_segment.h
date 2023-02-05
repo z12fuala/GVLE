@@ -1,15 +1,15 @@
 #include "sum_field_macros.h"
 
 __device__ static void sum_value_to_segment(// output
-											volatile ull *d_scan,
-											ull &segment_sum,
-											// input											 
-											uint value,
-											int segment_idx,
-											int segment_lane,
-											int warp_lane,
-											int segment_last_lane,
-											uint num_values) {
+                                            volatile ull *d_scan,
+                                            ull &segment_sum,
+                                            // input											 
+                                            uint value,
+                                            int segment_idx,
+                                            int segment_lane,
+                                            int warp_lane,
+                                            int segment_last_lane,
+                                            uint num_values) {
 	// Initialize sum field to 1
 	ull flagged_value = INIT_SUM_FIELD(value);
 
