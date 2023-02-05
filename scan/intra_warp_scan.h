@@ -6,9 +6,9 @@
 // Inclusive warp scan
 template <uint num_lanes = WARP_SIZE, class T>
 __device__ static void inc_warp_scan(// output
-	                                 T &prefix_sum, T &total_sum, 
-	                                 // input
-	                                 T value, int warp_lane) {
+                                     T &prefix_sum, T &total_sum, 
+                                     // input
+                                     T value, int warp_lane) {
 	const uint effec_num_lanes = CEIL_TO_POWER_OF_2(num_lanes);
 	const uint shfl_mask = ~((~0) << effec_num_lanes);
 	
@@ -29,9 +29,9 @@ __device__ static void inc_warp_scan(// output
 // Exclusive warp scan
 template <uint num_lanes = WARP_SIZE, class T>
 __device__ static void exc_warp_scan(// output
-	                                 T &prefix_sum, T &total_sum,
-	                                 // input
-	                                 T value, int warp_lane) {
+                                     T &prefix_sum, T &total_sum,
+                                     // input
+                                     T value, int warp_lane) {
 	inc_warp_scan<num_lanes, T>(prefix_sum, total_sum, value, warp_lane);
 	prefix_sum = prefix_sum - value;
 }
